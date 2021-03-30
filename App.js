@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
+import MealsNavigation from './navigation/MealsNavigator';
+
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -25,10 +27,7 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text>Meals app</Text>
-      <StatusBar style="auto" />
-    </View>
+    <MealsNavigation />
   );
 }
 
