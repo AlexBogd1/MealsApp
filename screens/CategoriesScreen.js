@@ -7,9 +7,14 @@ const CategoriesScreen = (props) => {
     const renderedGridIem = (renderItem) => {
         return (
             <TouchableOpacity style={styles.gridItem} onPress={() => {
-                props.navigation.navigate('MealDetail');
+                props.navigation.navigate({
+                    routeName: 'CategoryMeals',
+                    params: {
+                        categoryId: renderItem.item.id,
+                    }
+                });
             }}>
-                <View >
+                <View>
                     <Text>{renderItem.item.title}</Text>
                 </View>
             </TouchableOpacity>
@@ -17,7 +22,7 @@ const CategoriesScreen = (props) => {
     }
 
     return (
-        <FlatList data={CATEGORIES}
+        <FlatList  data={CATEGORIES}
                   numColumns={2}
                   keyExtractor={(item, index) => item.id}
                   renderItem={renderedGridIem}/>
@@ -27,9 +32,9 @@ const CategoriesScreen = (props) => {
 CategoriesScreen.navigationOptions = {
     headerTitle: 'Meal Categories',
     headerStyle: {
-        backgroundColor: Platform.OS === 'android'? Colors.primaryColor : 'white',
+        backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : 'white',
     },
-    headerTintColor: Platform.OS ==='android' ? 'white' : Colors.primaryColor,
+    headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
 };
 
 const styles = StyleSheet.create({
