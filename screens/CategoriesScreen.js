@@ -1,8 +1,8 @@
 import React from "react";
-import {View, Text, StyleSheet, FlatList, TouchableOpacity, Platform} from "react-native";
+import { StyleSheet, FlatList} from "react-native";
 import {CATEGORIES} from '../data/data';
 import CategoryGridTile from '../components/CategoryGridTile'
-import Colors from '../constants/Colors';
+
 
 const CategoriesScreen = (props) => {
     const renderedGridIem = (renderItem) => {

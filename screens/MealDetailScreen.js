@@ -1,5 +1,7 @@
 import React from "react";
 import {View, Text, StyleSheet, Button} from "react-native";
+import {HeaderButtons, Item} from "react-navigation-header-buttons";
+import CustomHeaderButton from "../components/CustomHeaderButton";
 import {MEALS} from "../data/data";
 
 const MealDetailScreen = (props) => {
@@ -23,6 +25,15 @@ MealDetailScreen.navigationOptions = navigationData => {
 
     return {
         headerTitle: selectedMeal.title,
+        headerRight: <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+            <Item
+                title='Favorite'
+                iconName='ios-star'
+                onPress={() => {
+                    console.log('Marg')
+                }}
+            />
+        </HeaderButtons>
     }
 }
 
