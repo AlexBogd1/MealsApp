@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontFamily: 'open-sans-bold',
-        fontSize: 20,
+        fontSize: 18,
         color: 'white',
         textAlign: 'center',
     }
