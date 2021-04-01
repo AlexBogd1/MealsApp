@@ -9,7 +9,15 @@ const CategoryMealsScreen = (props) => {
 
     const selectedMeals = MEALS.filter(meal => meal.categoryIds.indexOf(catId) >= 0);
 
-    const renderMealItem = (itemData) =>{
+    const renderMealItem = (itemData) => {
+        const goToNextPage = () => {
+            props.navigation.navigate({
+                routeName: 'MealDetail',
+                params: {
+                    mealId: itemData.item.id,
+                }
+            });
+        };
         return (
             <MealItem
                 title={itemData.item.title}
@@ -17,15 +25,16 @@ const CategoryMealsScreen = (props) => {
                 duration={itemData.item.duration}
                 complexity={itemData.item.complexity}
                 affordability={itemData.item.affordability}
+                onSelectMeal={goToNextPage}
             />
-        )
+        );
     }
 
     return (
         <FlatList
             data={selectedMeals}
             keyExtractor={(item, index) => item.id}
-            renderItem ={renderMealItem}
+            renderItem={renderMealItem}
         />
     );
 };
