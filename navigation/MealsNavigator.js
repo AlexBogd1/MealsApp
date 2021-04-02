@@ -2,6 +2,7 @@ import React from 'react';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
+import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom-tabs";
 
 import CategoriesScreen from '../screens/CategoriesScreen';
 import CategoryMealsScreen from '../screens/CategoryMealsScreen';
@@ -28,21 +29,38 @@ const MealsNavigation = createStackNavigator({
     }
 });
 
-const MealsFavTabNavigator = createBottomTabNavigator({
-    Meals: {screen: MealsNavigation, navigationOptions: {
-        tabBarIcon: (tabInfo) => {
-            return <Ionicons name='ios-restaurant' size={25} color={tabInfo.tintColor} />
-        }
-        }},
-    Favorite: {screen:FavoritesScreen, navigationOptions: {
+const tabScreenConfig = {
+    Meals: {
+        screen: MealsNavigation, navigationOptions: {
             tabBarIcon: (tabInfo) => {
-                return <Ionicons name='ios-star' size={25} color={tabInfo.tintColor} />
+                return <Ionicons name='ios-restaurant' size={25} color={tabInfo.tintColor}/>
             },
-        }},
-}, {
-    tabBarOptions: {
-        activeTintColor: Colors.primaryColor,
+
+        }
     },
-});
+    Favorite: {
+        screen: FavoritesScreen, navigationOptions: {
+            tabBarIcon: (tabInfo) => {
+                return <Ionicons name='ios-star' size={25} color={tabInfo.tintColor}/>
+            },
+            tabBarColor: Colors.primaryColor,
+        }
+    },
+};
+
+const MealsFavTabNavigator = Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator(tabScreenConfig, {
+        activeColor: Colors.accentColor,
+        shifting: true,
+        barStyle: {
+            backgroundColor: Colors.primaryColor
+        }
+
+    })
+    : createBottomTabNavigator(tabScreenConfig, {
+        tabBarOptions: {
+            activeTintColor: Colors.primaryColor,
+        },
+    });
 
 export default createAppContainer(MealsFavTabNavigator);
