@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import {View, Text, StyleSheet, Switch, Platform} from "react-native";
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/CustomHeaderButton";
@@ -10,7 +10,8 @@ const FilterSwitch = props => {
             <Text>{props.label}</Text>
             <Switch
                 trackColor={{
-                    true: Colors.primaryColor
+                    true: Colors.primaryColor,
+                    false: '#999797',
                 }}
                 thumbColor={Platform.OS === 'android' ? Colors.accentColor : Colors.primaryColor}
                 value={props.value}
@@ -20,10 +21,27 @@ const FilterSwitch = props => {
 }
 
 const FiltersScreen = props => {
+    const {navigation} = props;
+
     const [isGlutenFree, setIsGlutenFree] = useState(false);
     const [isLactoseFree, setIsLactoseFree] = useState(false);
     const [vegan, setVegan] = useState(false);
     const [vegetarian, setVegetarian] = useState(false);
+
+    const saveFilters =useCallback( () => {
+        const appliedFilters = {
+            glutenFree: isGlutenFree,
+            lactoseFree: isLactoseFree,
+            vegan: vegan,
+            vegetarian: vegetarian,
+        };
+        console.log(appliedFilters);
+    },[isGlutenFree,isLactoseFree,vegan,vegetarian]);
+
+    useEffect(() => {
+        navigation.setParams({save: saveFilters})
+    },[saveFilters]);
+
     return (
         <View style={styles.screen}>
             <Text style={styles.title}>Available Filters / Restrictions</Text>
@@ -61,6 +79,13 @@ FiltersScreen.navigationOptions = navData => {
                 onPress={() => {
                     navData.navigation.toggleDrawer();
                 }}
+            />
+        </HeaderButtons>,
+        headerRight: <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+            <Item
+                title='Save'
+                iconName='ios-save'
+                onPress={navData.navigation.getParam('save')}
             />
         </HeaderButtons>
     }
